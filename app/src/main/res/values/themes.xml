@@ -2,7 +2,8 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.WellWell" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/orange</item>
+        <item name="android:state_pressed">@color/orange_pressed</item>
     </style>
 
     <style name="Theme.WellWell" parent="Base.Theme.WellWell" />

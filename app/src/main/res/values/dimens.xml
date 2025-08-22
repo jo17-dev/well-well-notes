@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="title_common">30sp</dimen>
+    <dimen name="margin_common">16dp</dimen>
+    <dimen name="padding_common">32dp</dimen>
+</resources>
