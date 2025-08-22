@@ -30,7 +30,7 @@ class NotesListActivity : AppCompatActivity() {
         // seeding notes::
 
         for (i in 1..7){
-            notes.add( Note("Titre de la note $i", NoteStatus.TODO, "description de la note"))
+            notes.add( Note("Titre de laswswqdw qdwqd wqddqdq dqdwqd dadadas asdad asdadas oioeew fewuwef note $i", NoteStatus.TODO, "description de la note"))
         }
 
 
