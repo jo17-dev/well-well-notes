@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Widget.Theme.WellWell.ActionBar.Fullscreen" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">?attr/fullscreenBackgroundColor</item>
+        <item name="titleTextStyle">@style/FullscreenActionBar.TitleText</item>
+    </style>
+
+    <style name="FullscreenActionBar.TitleText" parent="Widget.AppCompat.ActionBar.TabText">
+        <item name="android:textColor">?attr/fullscreenTextColor</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+</resources>
