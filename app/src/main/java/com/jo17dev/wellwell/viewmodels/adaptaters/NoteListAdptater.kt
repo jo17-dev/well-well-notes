@@ -3,6 +3,7 @@ package com.jo17dev.wellwell.viewmodels.adaptaters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Switch
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.jo17dev.wellwell.R
@@ -14,9 +15,11 @@ class NoteListAdptater(private val notes: ArrayList<Note>) : RecyclerView.Adapte
     // ceci est le view Holder qu'on déclaire, qu'on es en fait censé déclarer avant l'adaptater
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val itemTitle : TextView
+        val itemSwitch: Switch
 
         init {
             itemTitle = view.findViewById(R.id.tv_note_title)
+            itemSwitch = view.findViewById(R.id.s_note_status)
         }
     }
 
@@ -31,6 +34,7 @@ class NoteListAdptater(private val notes: ArrayList<Note>) : RecyclerView.Adapte
     // seed les données de la ViewHolder avec de les données de la liste ( les vrais datas)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemTitle.text = notes[position].title
+//        holder.itemSwitch.
     }
 
     override fun getItemCount(): Int {
