@@ -12,7 +12,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.jo17dev.wellwell.R
 
-class EditNoteActivity : AppCompatActivity() {
+class AddNoteActivity : AppCompatActivity() {
 
     private lateinit var btnCancel: Button
     private  lateinit var btnValidate: Button
@@ -43,7 +43,6 @@ class EditNoteActivity : AppCompatActivity() {
 
         tvTitle.text = pageTitle + pageSubTitle
 
-
         btnValidate.setOnClickListener() {
             if(!validateForm(etTitle.text.toString(), etDescription.text.toString())){
                 Toast.makeText(this, "The entered datas are not valid", Toast.LENGTH_SHORT).show()
@@ -52,8 +51,6 @@ class EditNoteActivity : AppCompatActivity() {
 
             //every this passed validation here..
             Toast.makeText(this, "The note has been edited/added", Toast.LENGTH_SHORT).show()
-
-
         }
 
 
