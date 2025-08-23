@@ -5,4 +5,9 @@
         <item name="colorPrimary">@color/orange</item>
         <item name="android:state_pressed">@color/orange_pressed</item>
     </style>
+
+    <style name="ThemeOverlay.WellWell.FullscreenContainer" parent="">
+        <item name="fullscreenBackgroundColor">@color/light_blue_900</item>
+        <item name="fullscreenTextColor">@color/light_blue_A400</item>
+    </style>
 </resources>
