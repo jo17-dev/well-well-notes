@@ -1,5 +1,6 @@
 package com.jo17dev.wellwell.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -49,6 +50,7 @@ class NotesListActivity : AppCompatActivity() {
         et_noteTitle = findViewById(R.id.et_note_title)
 
 
+        // au click, pour ajouter une note sans description/alarm
         btn_AddNote.setOnClickListener{
 
             if(et_noteTitle.text.toString() == ""){
@@ -58,6 +60,11 @@ class NotesListActivity : AppCompatActivity() {
                 Toast.makeText(this, "You note has been added ", Toast.LENGTH_SHORT).show()
                 noteList.adapter = NoteListAdptater(notes)
             }
+        }
+
+        btn_AddNote.setOnLongClickListener {
+            startActivity(Intent(this, EditNoteActivity::class.java))
+            true
         }
 
     }
