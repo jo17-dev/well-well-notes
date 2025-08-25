@@ -66,7 +66,6 @@ class NotesListActivity : AppCompatActivity() {
             startActivity(Intent(this, AddNoteActivity::class.java))
             true
         }
-
     }
 
 

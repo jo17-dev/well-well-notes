@@ -8,7 +8,7 @@ import com.jo17dev.wellwell.model.dao.NoteDao
 import com.jo17dev.wellwell.model.entities.NoteEntity
 
 
-@Database(entities = [NoteEntity::class], version = 1)
+@Database(entities = [NoteEntity::class], version = 1, exportSchema = false)
 abstract  class AppDatabase : RoomDatabase() {
     abstract fun noteDao(): NoteDao
 

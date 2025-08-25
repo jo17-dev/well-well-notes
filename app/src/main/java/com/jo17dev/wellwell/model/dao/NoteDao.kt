@@ -2,22 +2,24 @@ package com.jo17dev.wellwell.model.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import com.google.android.material.circularreveal.CircularRevealHelper.Strategy
 import com.jo17dev.wellwell.model.entities.NoteEntity
 
 
 @Dao
 interface NoteDao {
     @Query("SELECT * from notes")
-    fun getAll(): List<NoteEntity>
+    suspend fun getAll(): List<NoteEntity>
 
     @Query("SELECT * from notes where id = :id")
-    fun findById(id:Long): NoteEntity
+    suspend fun findById(id:Long): NoteEntity
 
-    @Insert
-    fun add(note: NoteEntity)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun add(note: NoteEntity): Long
 
     @Update
-    fun update(note: NoteEntity)
+    suspend fun update(note: NoteEntity)
 }

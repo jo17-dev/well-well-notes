@@ -11,10 +11,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import com.jo17dev.wellwell.R
 import com.jo17dev.wellwell.model.database.AppDatabase
 import com.jo17dev.wellwell.model.entities.NoteEntity
 import com.jo17dev.wellwell.model.entities.NoteStatus
+import com.jo17dev.wellwell.model.repositories.NoteRepo
+import kotlinx.coroutines.launch
 
 class AddNoteActivity : AppCompatActivity() {
 
@@ -27,6 +30,9 @@ class AddNoteActivity : AppCompatActivity() {
     private val pageTitle = "Well Well... "
     private val pageSubTitle = "Add a note"
 
+    // Initialisation de la base de données et du repository
+    private val db by lazy { AppDatabase.getInstance(application) }
+    private val noteRepository by lazy { NoteRepo(db.noteDao()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,12 +65,14 @@ class AddNoteActivity : AppCompatActivity() {
             }
 
             //every this passed validation here..
-            val db = AppDatabase.getInstance(application)
+//            val db = AppDatabase.getInstance(application)
 
             Log.d("ADD_NOTE_UI", "Test de la fonctionn jahah")
             Log.d("ADD_NOTE_UI", db.toString())
             //Log.d("ADD_NOTE_UI", db.toString())
-            db.noteDao().add(NoteEntity(title = titleString, description = descriptionString, status = NoteStatus.TODO))
+//            db.noteDao().add(NoteEntity(title = titleString, description = descriptionString, status = NoteStatus.TODO))
+
+            addNote(NoteEntity(title = titleString, description = descriptionString, status = NoteStatus.TODO))
 
             // making toast
             Toast.makeText(this, "The note has been Added", Toast.LENGTH_SHORT).show()
@@ -80,5 +88,11 @@ class AddNoteActivity : AppCompatActivity() {
 
     private fun validateForm (title:String, description:String):Boolean {
         return title.isNotEmpty()
+    }
+
+    private fun addNote(note: NoteEntity){
+        lifecycleScope.launch {
+            noteRepository.addNote(note);
+        }
     }
 }
