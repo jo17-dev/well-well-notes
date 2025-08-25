@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jo17dev.wellwell.R
 import com.jo17dev.wellwell.model.entities.Note
 import com.jo17dev.wellwell.model.entities.NoteStatus
-import com.jo17dev.wellwell.viewmodels.adaptaters.NoteListAdptater
+import com.jo17dev.wellwell.viewmodel.adaptaters.NoteListAdptater
 
 class NotesListActivity : AppCompatActivity() {
     // actual list of notes
@@ -63,7 +63,7 @@ class NotesListActivity : AppCompatActivity() {
         }
 
         btn_AddNote.setOnLongClickListener {
-            startActivity(Intent(this, EditNoteActivity::class.java))
+            startActivity(Intent(this, AddNoteActivity::class.java))
             true
         }
 

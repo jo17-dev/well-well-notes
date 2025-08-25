@@ -1,4 +1,4 @@
-package com.jo17dev.wellwell.viewmodels.adaptaters
+package com.jo17dev.wellwell.viewmodel.adaptaters
 
 import android.view.LayoutInflater
 import android.view.View
