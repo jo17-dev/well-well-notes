@@ -3,16 +3,24 @@ package com.jo17dev.wellwell.ui
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import com.jo17dev.wellwell.R
+import com.jo17dev.wellwell.model.database.AppDatabase
+import com.jo17dev.wellwell.model.entities.Note
+import com.jo17dev.wellwell.model.repositories.NoteRepo
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var btnLogin: Button
-
+    private lateinit var etEmail : EditText
+    private lateinit var etPassword: EditText
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -24,10 +32,16 @@ class LoginActivity : AppCompatActivity() {
         }
         // parsing variables:
         btnLogin  = findViewById(R.id.btn_login)
+        etEmail = findViewById(R.id.et_email)
+        etPassword = findViewById(R.id.et_password)
 
         // lien vers la liste de notes
         btnLogin.setOnClickListener({
-            startActivity(Intent(this, NotesListActivity::class.java))
+            if(etEmail.text.toString() == "admin@gmail.com" && etPassword.text.toString() == "admin"){
+                startActivity(Intent(this, NotesListActivity::class.java))
+            }else{
+                Toast.makeText(this, "Credentials not valid.. Try again.", Toast.LENGTH_SHORT).show()
+            }
         })
     }
 }
