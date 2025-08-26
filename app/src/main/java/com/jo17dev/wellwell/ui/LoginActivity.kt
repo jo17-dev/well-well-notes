@@ -9,7 +9,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import com.jo17dev.wellwell.R
+import com.jo17dev.wellwell.model.database.AppDatabase
+import com.jo17dev.wellwell.model.entities.Note
+import com.jo17dev.wellwell.model.repositories.NoteRepo
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
 

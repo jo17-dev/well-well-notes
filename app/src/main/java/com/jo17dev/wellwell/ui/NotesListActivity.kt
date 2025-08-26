@@ -9,12 +9,16 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jo17dev.wellwell.R
+import com.jo17dev.wellwell.model.database.AppDatabase
 import com.jo17dev.wellwell.model.entities.Note
 import com.jo17dev.wellwell.model.entities.NoteStatus
+import com.jo17dev.wellwell.model.repositories.NoteRepo
 import com.jo17dev.wellwell.viewmodel.adaptaters.NoteListAdptater
+import kotlinx.coroutines.launch
 
 class NotesListActivity : AppCompatActivity() {
     // actual list of notes
@@ -23,6 +27,11 @@ class NotesListActivity : AppCompatActivity() {
     private lateinit var noteList: RecyclerView;
     private lateinit var btn_AddNote: Button;
     private lateinit var et_noteTitle: EditText;
+
+
+    private val db by lazy { AppDatabase.getInstance(application) }
+    private val noteRepository by lazy { NoteRepo(db.noteDao()) }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,9 +44,11 @@ class NotesListActivity : AppCompatActivity() {
         }
         // seeding notes::
 
-        for (i in 1..5){
-            notes.add( Note("Titre de laswswqdw qdwqd wqddqdq dqdwqd dadada fewuwef note $i", NoteStatus.TODO, "description de la note"))
-        }
+//        for (i in 1..5){
+//            notes.add( Note("Titre de laswswqdw qdwqd wqddqdq dqdwqd dadada fewuwef note $i", NoteStatus.TODO, "description de la note"))
+//        }
+
+        getAllNotes()
 
 
         // binding all the datas from the xml
@@ -68,5 +79,10 @@ class NotesListActivity : AppCompatActivity() {
         }
     }
 
-
+    private fun getAllNotes(){
+        lifecycleScope.launch {
+            notes = noteRepository.getAll()
+            return@launch
+        }
+    }
 }
