@@ -39,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
         etEmail = findViewById(R.id.et_email)
         etPassword = findViewById(R.id.et_password)
 
-        loginVM = LoginViewModel(application)
+        loginVM = LoginViewModel()
 
         // lien vers la liste de notes
         btnLogin.setOnClickListener({
@@ -56,13 +56,6 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(this, "Bruh.. $reason", Toast.LENGTH_SHORT).show()
                 }
             )
-
-
-            if(etEmail.text.toString() == "admin@gmail.com" && etPassword.text.toString() == "admin"){
-                startActivity(Intent(this, NotesListActivity::class.java))
-            }else{
-                Toast.makeText(this, "Credentials not valid.. Try again.", Toast.LENGTH_SHORT).show()
-            }
         })
     }
 }
