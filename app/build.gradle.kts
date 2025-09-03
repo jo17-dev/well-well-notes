@@ -39,6 +39,7 @@ android {
 
 dependencies {
     val room_version = "2.7.2"
+    val lifecycle_version = "2.9.3"
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -64,4 +65,15 @@ dependencies {
     testImplementation("androidx.room:room-testing:${room_version}")
     // optional - Paging 3 Integration
     implementation("androidx.room:room-paging:${room_version}")
+
+
+    // coroutine awareness dependencies
+    //
+    // for viewModel scope
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${lifecycle_version}")
+    // runtime lifecycle scope
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:${lifecycle_version}")
+
+    // liveData lifecyle scope
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:${lifecycle_version}")
 }

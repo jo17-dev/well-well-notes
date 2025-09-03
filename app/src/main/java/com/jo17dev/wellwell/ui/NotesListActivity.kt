@@ -6,18 +6,22 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jo17dev.wellwell.R
+import com.jo17dev.wellwell.common.ResponseCode
 import com.jo17dev.wellwell.model.database.AppDatabase
 import com.jo17dev.wellwell.model.entities.Note
 import com.jo17dev.wellwell.model.entities.NoteStatus
 import com.jo17dev.wellwell.model.repositories.NoteRepo
 import com.jo17dev.wellwell.viewmodel.adaptaters.NoteListAdptater
+import com.jo17dev.wellwell.viewmodel.adaptaters.NoteListVM
 import kotlinx.coroutines.launch
 
 class NotesListActivity : AppCompatActivity() {
@@ -29,8 +33,8 @@ class NotesListActivity : AppCompatActivity() {
     private lateinit var et_noteTitle: EditText;
 
 
-    private val db by lazy { AppDatabase.getInstance(application) }
-    private val noteRepository by lazy { NoteRepo(db.noteDao()) }
+    private val noteListVM: NoteListVM by viewModels();
+    private lateinit var adaptater: NoteListAdptater;
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,47 +46,44 @@ class NotesListActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        // seeding notes::
 
-//        for (i in 1..5){
-//            notes.add( Note("Titre de laswswqdw qdwqd wqddqdq dqdwqd dadada fewuwef note $i", NoteStatus.TODO, "description de la note"))
-//        }
 
-        getAllNotes()
 
 
         // binding all the datas from the xml
 
         noteList = findViewById(R.id.rv_note_list)
         noteList.layoutManager = LinearLayoutManager(this)
-        noteList.adapter = NoteListAdptater(notes)
+        adaptater = NoteListAdptater(notes)
+        noteList.adapter = adaptater
 
         btn_AddNote = findViewById(R.id.btn_add_note)
         et_noteTitle = findViewById(R.id.et_note_title)
 
+        // note seeding
+        noteListVM.noteList.observe(this) {list ->
+            adaptater.updateList(list);
+        }
+
+        noteListVM.loadNotes()
 
         // au click, pour ajouter une note sans description/alarm
         btn_AddNote.setOnClickListener{
-
-            if(et_noteTitle.text.toString() == ""){
-                Toast.makeText(this, "note ${et_noteTitle.text} ", Toast.LENGTH_SHORT).show()
-            }else{
-                notes.add(Note(et_noteTitle.text.toString(), NoteStatus.TODO, "No description given"))
-                Toast.makeText(this, "You note has been added ", Toast.LENGTH_SHORT).show()
-                noteList.adapter = NoteListAdptater(notes)
+            lifecycleScope.launch {
+                val response: ResponseCode =  noteListVM.addNote(
+                    Note(et_noteTitle.text.toString(),
+                        NoteStatus.TODO,
+                        description = null
+                    ))
+                Toast.makeText(applicationContext, response.message, Toast.LENGTH_SHORT).show()
             }
         }
 
+        // au long-click, pour ajouter une note plus personnalisée
         btn_AddNote.setOnLongClickListener {
             startActivity(Intent(this, AddNoteActivity::class.java))
             true
         }
-    }
 
-    private fun getAllNotes(){
-        lifecycleScope.launch {
-            notes = noteRepository.getAll()
-            return@launch
-        }
     }
 }

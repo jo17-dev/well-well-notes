@@ -14,6 +14,7 @@ import com.jo17dev.wellwell.R
 import com.jo17dev.wellwell.model.database.AppDatabase
 import com.jo17dev.wellwell.model.entities.Note
 import com.jo17dev.wellwell.model.repositories.NoteRepo
+import com.jo17dev.wellwell.viewmodel.adaptaters.LoginViewModel
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
@@ -21,6 +22,9 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var btnLogin: Button
     private lateinit var etEmail : EditText
     private lateinit var etPassword: EditText
+
+    private lateinit var loginVM: LoginViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -35,13 +39,23 @@ class LoginActivity : AppCompatActivity() {
         etEmail = findViewById(R.id.et_email)
         etPassword = findViewById(R.id.et_password)
 
+        loginVM = LoginViewModel()
+
         // lien vers la liste de notes
         btnLogin.setOnClickListener({
-            if(etEmail.text.toString() == "admin@gmail.com" && etPassword.text.toString() == "admin"){
-                startActivity(Intent(this, NotesListActivity::class.java))
-            }else{
-                Toast.makeText(this, "Credentials not valid.. Try again.", Toast.LENGTH_SHORT).show()
-            }
+
+            loginVM.auth(
+                etEmail.text.toString(),
+                etPassword.text.toString(),
+
+                onSuccess = fun (){
+                    startActivity(Intent(this, NotesListActivity::class.java))
+                },
+
+                onFailed =  fun (reason:String){
+                    Toast.makeText(this, "Bruh.. $reason", Toast.LENGTH_SHORT).show()
+                }
+            )
         })
     }
 }

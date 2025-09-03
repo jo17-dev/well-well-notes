@@ -1,5 +1,6 @@
 package com.jo17dev.wellwell.viewmodel.adaptaters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jo17dev.wellwell.R
 import com.jo17dev.wellwell.model.entities.Note
 
-class NoteListAdptater(private val notes: ArrayList<Note>) : RecyclerView.Adapter<NoteListAdptater.ViewHolder>()  {
+class NoteListAdptater(private var notes: ArrayList<Note>) : RecyclerView.Adapter<NoteListAdptater.ViewHolder>()  {
 
 
     // ceci est le view Holder qu'on déclaire, qu'on es en fait censé déclarer avant l'adaptater
@@ -21,6 +22,14 @@ class NoteListAdptater(private val notes: ArrayList<Note>) : RecyclerView.Adapte
             itemTitle = view.findViewById(R.id.tv_note_title)
             itemSwitch = view.findViewById(R.id.s_note_status)
         }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public fun updateList(newList: ArrayList<Note>){
+        // notes = newList;
+        notes.clear()
+        notes.addAll(newList)
+        notifyDataSetChanged()
     }
 
     // à Evenement d'ajout'un nouveau ViewHolder. mais n'ajoute pas les données !
