@@ -7,10 +7,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.jo17dev.wellwell.common.ResponseCode
 import com.jo17dev.wellwell.model.database.AppDatabase
 import com.jo17dev.wellwell.model.entities.Note
+import com.jo17dev.wellwell.model.entities.NoteEntity
 import com.jo17dev.wellwell.model.entities.NoteStatus
 import com.jo17dev.wellwell.model.repositories.NoteRepo
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class NoteListVM(application: Application) : AndroidViewModel(application) {
@@ -38,5 +41,19 @@ class NoteListVM(application: Application) : AndroidViewModel(application) {
             noteList.value =  _noteRepository.getAll();
             isLoading.value = false;
         }
+    }
+
+    suspend fun addNote(note: Note): ResponseCode{
+        try {
+            if(note.title.length > 1){
+                _noteRepository.addNote(NoteEntity(0, note.title, note.description, note.status))
+                loadNotes()
+            }else{
+                throw Exception("not a valid note");
+            }
+        }catch (err: Exception){
+            return ResponseCode.FAILED;
+        }
+        return ResponseCode.CREATED;
     }
 }

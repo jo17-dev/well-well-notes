@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jo17dev.wellwell.R
+import com.jo17dev.wellwell.common.ResponseCode
 import com.jo17dev.wellwell.model.database.AppDatabase
 import com.jo17dev.wellwell.model.entities.Note
 import com.jo17dev.wellwell.model.entities.NoteStatus
@@ -68,13 +69,13 @@ class NotesListActivity : AppCompatActivity() {
 
         // au click, pour ajouter une note sans description/alarm
         btn_AddNote.setOnClickListener{
-
-            if(et_noteTitle.text.toString() == ""){
-                Toast.makeText(this, "note ${et_noteTitle.text} ", Toast.LENGTH_SHORT).show()
-            }else{
-                notes.add(Note(et_noteTitle.text.toString(), NoteStatus.TODO, "No description given"))
-                Toast.makeText(this, "You note has been added ", Toast.LENGTH_SHORT).show()
-                noteList.adapter = NoteListAdptater(notes)
+            lifecycleScope.launch {
+                val response: ResponseCode =  noteListVM.addNote(
+                    Note(et_noteTitle.text.toString(),
+                        NoteStatus.TODO,
+                        description = null
+                    ))
+                Toast.makeText(applicationContext, response.message, Toast.LENGTH_SHORT).show()
             }
         }
 
