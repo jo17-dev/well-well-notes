@@ -1,6 +1,7 @@
 package com.jo17dev.wellwell.viewmodel.adaptaters
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.jo17dev.wellwell.R
 import com.jo17dev.wellwell.model.entities.Note
+import com.jo17dev.wellwell.ui.ViewNoteActivity
 
 class NoteListAdptater(private var notes: ArrayList<Note>) : RecyclerView.Adapter<NoteListAdptater.ViewHolder>()  {
 
@@ -21,6 +23,10 @@ class NoteListAdptater(private var notes: ArrayList<Note>) : RecyclerView.Adapte
         init {
             itemTitle = view.findViewById(R.id.tv_note_title)
             itemSwitch = view.findViewById(R.id.s_note_status)
+
+            itemTitle.setOnClickListener {
+                view.context.startActivity(Intent(view.context, ViewNoteActivity::class.java))
+            }
         }
     }
 
