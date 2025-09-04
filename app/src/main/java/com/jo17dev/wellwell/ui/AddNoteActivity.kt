@@ -14,7 +14,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.jo17dev.wellwell.R
 import com.jo17dev.wellwell.model.database.AppDatabase
-import com.jo17dev.wellwell.model.entities.NoteEntity
+import com.jo17dev.wellwell.model.entities.Note
 import com.jo17dev.wellwell.model.entities.NoteStatus
 import com.jo17dev.wellwell.model.repositories.NoteRepo
 import kotlinx.coroutines.launch
@@ -72,7 +72,7 @@ class AddNoteActivity : AppCompatActivity() {
             //Log.d("ADD_NOTE_UI", db.toString())
 //            db.noteDao().add(NoteEntity(title = titleString, description = descriptionString, status = NoteStatus.TODO))
 
-            addNote(NoteEntity(title = titleString, description = descriptionString, status = NoteStatus.TODO))
+            addNote(Note(title = titleString, description = descriptionString, status = NoteStatus.TODO))
 
             // making toast
             Toast.makeText(this, "The note has been Added", Toast.LENGTH_SHORT).show()
@@ -90,7 +90,7 @@ class AddNoteActivity : AppCompatActivity() {
         return title.isNotEmpty()
     }
 
-    private fun addNote(note: NoteEntity){
+    private fun addNote(note: Note){
         lifecycleScope.launch {
             noteRepository.addNote(note);
         }

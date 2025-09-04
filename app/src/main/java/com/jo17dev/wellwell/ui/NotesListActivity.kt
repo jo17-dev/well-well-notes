@@ -71,8 +71,9 @@ class NotesListActivity : AppCompatActivity() {
         btn_AddNote.setOnClickListener{
             lifecycleScope.launch {
                 val response: ResponseCode =  noteListVM.addNote(
-                    Note(et_noteTitle.text.toString(),
-                        NoteStatus.TODO,
+                    Note(
+                        title = et_noteTitle.text.toString(),
+                        status = NoteStatus.TODO,
                         description = null
                     ))
                 Toast.makeText(applicationContext, response.message, Toast.LENGTH_SHORT).show()

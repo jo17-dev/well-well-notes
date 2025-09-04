@@ -5,10 +5,10 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.jo17dev.wellwell.model.dao.NoteDao
-import com.jo17dev.wellwell.model.entities.NoteEntity
+import com.jo17dev.wellwell.model.entities.Note
 
 
-@Database(entities = [NoteEntity::class], version = 1, exportSchema = false)
+@Database(entities = [Note::class], version = 1, exportSchema = false)
 abstract  class AppDatabase : RoomDatabase() {
     abstract fun noteDao(): NoteDao
 
