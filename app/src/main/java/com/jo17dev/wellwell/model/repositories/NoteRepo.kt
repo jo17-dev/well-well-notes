@@ -2,10 +2,9 @@ package com.jo17dev.wellwell.model.repositories
 
 import com.jo17dev.wellwell.model.dao.NoteDao
 import com.jo17dev.wellwell.model.entities.Note
-import com.jo17dev.wellwell.model.entities.NoteEntity
 
 class NoteRepo(private val noteDao: NoteDao) {
-    suspend fun addNote(note: NoteEntity): Long {
+    suspend fun addNote(note: Note): Long {
         return noteDao.add(note)
     }
 
@@ -16,7 +15,7 @@ class NoteRepo(private val noteDao: NoteDao) {
 
         noteEntities.forEach {
             notes.add(
-                Note(it.title, description = it.description, status = it.status)
+                Note(title=it.title, description = it.description, status = it.status)
             )
         }
         return notes

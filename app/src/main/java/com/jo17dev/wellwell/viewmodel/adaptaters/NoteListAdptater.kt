@@ -44,6 +44,7 @@ class NoteListAdptater(private var notes: ArrayList<Note>) : RecyclerView.Adapte
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemTitle.text = notes[position].title
 //        holder.itemSwitch.
+        // holder.setIsRecyclable(true)
     }
 
     override fun getItemCount(): Int {
