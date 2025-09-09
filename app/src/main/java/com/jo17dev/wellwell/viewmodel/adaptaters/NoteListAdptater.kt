@@ -20,12 +20,20 @@ class NoteListAdptater(private var notes: ArrayList<Note>) : RecyclerView.Adapte
         val itemTitle : TextView
         val itemSwitch: Switch
 
+        var noteId: Long? = null;
+
+
         init {
             itemTitle = view.findViewById(R.id.tv_note_title)
             itemSwitch = view.findViewById(R.id.s_note_status)
 
             itemTitle.setOnClickListener {
-                view.context.startActivity(Intent(view.context, ViewNoteActivity::class.java))
+                noteId?.let { id ->
+                    val intent = Intent(view.context, ViewNoteActivity::class.java).apply {
+                        putExtra("noteId", id)
+                    }
+                    view.context.startActivity(intent)
+                }
             }
         }
     }
@@ -51,6 +59,7 @@ class NoteListAdptater(private var notes: ArrayList<Note>) : RecyclerView.Adapte
         holder.itemTitle.text = notes[position].title
 //        holder.itemSwitch.
         // holder.setIsRecyclable(true)
+        holder.noteId = notes[position].id
     }
 
     override fun getItemCount(): Int {
