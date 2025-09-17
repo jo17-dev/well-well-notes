@@ -10,16 +10,13 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jo17dev.wellwell.R
 import com.jo17dev.wellwell.common.ResponseCode
-import com.jo17dev.wellwell.model.database.AppDatabase
 import com.jo17dev.wellwell.model.entities.Note
 import com.jo17dev.wellwell.model.entities.NoteStatus
-import com.jo17dev.wellwell.model.repositories.NoteRepo
 import com.jo17dev.wellwell.viewmodel.adaptaters.NoteListAdptater
 import com.jo17dev.wellwell.viewmodel.adaptaters.NoteListVM
 import kotlinx.coroutines.launch
@@ -51,7 +48,6 @@ class NotesListActivity : AppCompatActivity() {
 
 
         // binding all the datas from the xml
-
         noteList = findViewById(R.id.rv_note_list)
         noteList.layoutManager = LinearLayoutManager(this)
         adaptater = NoteListAdptater(notes)
@@ -65,7 +61,6 @@ class NotesListActivity : AppCompatActivity() {
             adaptater.updateList(list);
         }
 
-        noteListVM.loadNotes()
 
         // au click, pour ajouter une note sans description/alarm
         btn_AddNote.setOnClickListener{

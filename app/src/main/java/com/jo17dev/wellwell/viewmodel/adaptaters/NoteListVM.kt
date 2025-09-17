@@ -1,6 +1,7 @@
 package com.jo17dev.wellwell.viewmodel.adaptaters
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -20,12 +21,7 @@ class NoteListVM(application: Application) : AndroidViewModel(application) {
     public var isLoading = MutableLiveData<Boolean>(false);
 
     init {
-        isLoading.value = true;
-        // launch la req vers la BD en async
-        viewModelScope.launch {
-            noteList.value =  _noteRepository.getAll();
-            isLoading.value = false;
-        }
+        loadNotes()
     }
 
     fun loadNotes(){
@@ -33,6 +29,8 @@ class NoteListVM(application: Application) : AndroidViewModel(application) {
         // launch la req vers la BD en async
         viewModelScope.launch {
             noteList.value =  _noteRepository.getAll();
+
+            Log.d("NOTE_LIST_VM", noteList.value?.toString() ?: "le la liste des notes est null")
             isLoading.value = false;
         }
     }

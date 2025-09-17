@@ -2,8 +2,6 @@ package com.jo17dev.wellwell.model.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
 
 
 @Entity(tableName = "notes")

@@ -15,7 +15,7 @@ class NoteRepo(private val noteDao: NoteDao) {
 
         noteEntities.forEach {
             notes.add(
-                Note(title=it.title, description = it.description, status = it.status)
+                Note(id = it.id, title=it.title, description = it.description, status = it.status)
             )
         }
         return notes

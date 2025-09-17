@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.jo17dev.wellwell.R
 import com.jo17dev.wellwell.model.entities.Note
+import com.jo17dev.wellwell.model.entities.NoteStatus
 import com.jo17dev.wellwell.ui.ViewNoteActivity
 
 class NoteListAdptater(private var notes: ArrayList<Note>) : RecyclerView.Adapter<NoteListAdptater.ViewHolder>()  {
@@ -26,14 +27,11 @@ class NoteListAdptater(private var notes: ArrayList<Note>) : RecyclerView.Adapte
         init {
             itemTitle = view.findViewById(R.id.tv_note_title)
             itemSwitch = view.findViewById(R.id.s_note_status)
-
             itemTitle.setOnClickListener {
-                noteId?.let { id ->
-                    val intent = Intent(view.context, ViewNoteActivity::class.java).apply {
-                        putExtra("noteId", id)
-                    }
-                    view.context.startActivity(intent)
+                val intent = Intent(view.context, ViewNoteActivity::class.java).apply {
+                    putExtra("noteId", noteId)
                 }
+                view.context.startActivity(intent)
             }
         }
     }
@@ -57,9 +55,10 @@ class NoteListAdptater(private var notes: ArrayList<Note>) : RecyclerView.Adapte
     // seed les données de la ViewHolder avec de les données de la liste ( les vrais datas)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemTitle.text = notes[position].title
-//        holder.itemSwitch.
-        // holder.setIsRecyclable(true)
+        holder.itemSwitch.isChecked = (notes[position].status == NoteStatus.DONE)
         holder.noteId = notes[position].id
+
+        holder.itemTitle.text = notes[position].title
     }
 
     override fun getItemCount(): Int {
