@@ -1,5 +1,5 @@
 package com.jo17dev.wellwell.common
-
+// this will be used to communication status between viewmodels and activuties
 enum class ResponseCode(val code: Int, val message: String) {
     // general responses
     FAILED(99, "Operaion Failed"),
@@ -10,5 +10,5 @@ enum class ResponseCode(val code: Int, val message: String) {
 
 
     // specific responses goes here...
-
+    LOADING(1024, "Loading datas"),
 }

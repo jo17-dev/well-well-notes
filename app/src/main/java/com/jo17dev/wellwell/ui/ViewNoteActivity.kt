@@ -2,16 +2,21 @@ package com.jo17dev.wellwell.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import com.jo17dev.wellwell.R
 import com.jo17dev.wellwell.model.database.AppDatabase
 import com.jo17dev.wellwell.model.entities.Note
+import com.jo17dev.wellwell.viewmodel.adaptaters.ViewNoteVM
 import kotlinx.coroutines.launch
 
 class ViewNoteActivity : AppCompatActivity() {
@@ -20,9 +25,7 @@ class ViewNoteActivity : AppCompatActivity() {
     private lateinit var tvNoteTitle: TextView
     private lateinit var tvNoteDescription: TextView
 
-    private val db by lazy { AppDatabase.getInstance(applicationContext) }
-    private val noteRepository by lazy { db.noteDao() }
-
+    private val viewNoteVM: ViewNoteVM by viewModels()
     private var note: Note? = null
 
 
@@ -40,15 +43,12 @@ class ViewNoteActivity : AppCompatActivity() {
         tvNoteTitle = findViewById<TextView>(R.id.tv_note_title)
         tvNoteDescription = findViewById<TextView>(R.id.tv_note_description)
 
-
-
-        lifecycleScope.launch {
-            val noteId:Long = intent.getLongExtra("noteId", 0)
-            tvNoteTitle.text = "La note est::" + noteId.toString()
-
-            note = noteRepository.findById(noteId)
-            // tvNoteTitle.text = note?.title
-            tvNoteDescription.text = note?.description
+        val noteId:Long = intent.getLongExtra("noteId", 0)
+        viewNoteVM.loadNote(noteId)
+        Log.d("VIEW_NOTE_ACTIVITY", "tes tes tes")
+        viewNoteVM.note.observe(this){ item ->
+            tvNoteTitle.text = item?.title ?: "Not title found."
+            tvNoteDescription.text = item?.description ?: "No Description found."
         }
 
 

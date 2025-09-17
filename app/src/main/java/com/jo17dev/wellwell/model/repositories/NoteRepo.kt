@@ -21,4 +21,7 @@ class NoteRepo(private val noteDao: NoteDao) {
         return notes
     }
 
+    suspend fun findById(id:Long): Note?{
+        return noteDao.findById(id)
+    }
 }
